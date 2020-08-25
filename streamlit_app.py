@@ -10,6 +10,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import os
 
 import geopandas as gpd
 from shapely.geometry import Polygon, MultiPolygon
@@ -92,10 +93,13 @@ def scrape_data(today, days_in):
         # Use .format(YYYY, M, D)
         lookup_URL = 'https://www.wunderground.com/hourly/us/ny/new-york-city/date/{}-{}-{}.html'
 
-        options = webdriver.ChromeOptions();
-        options.add_argument('headless'); # to run chrome in the backbroung
+        options = webdriver.ChromeOptions()
+        options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+        options.add_argument("--headless") # to run chrome in the backbroung
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--no-sandbox")
 
-        driver = webdriver.Chrome(executable_path='chromedriver.exe', options=options)
+        driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=options)
 
         start_date = today + pd.Timedelta(days=1)
         end_date = today + pd.Timedelta(days=days_in + 1)

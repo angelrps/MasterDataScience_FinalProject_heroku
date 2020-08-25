@@ -96,10 +96,10 @@ def scrape_data(today, days_in):
         options = webdriver.ChromeOptions()
         options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
         options.add_argument("--headless") # to run chrome in the backbroung
-        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--disable-dev-sh-usage")
         options.add_argument("--no-sandbox")
 
-        driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=options)
+        driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=options)
 
         start_date = today + pd.Timedelta(days=1)
         end_date = today + pd.Timedelta(days=days_in + 1)

@@ -30,7 +30,7 @@ import altair as alt
 @st.cache(show_spinner=False)
 def get_LocationIDs():
     # 1. Import Location and Borough columns form NY TAXI ZONES dataset
-    dfzones = pd.read_csv('https://raw.github.com/angelrps/MasterDataScience_FinalProject/master/data/NY_taxi_zones.csv', sep=',',
+    dfzones = pd.read_csv('NY_taxi_zones.csv', sep=',',
                           usecols=['LocationID', 'borough'])
 
     # 2. Filter Manhattan zones
@@ -95,7 +95,7 @@ def scrape_data(today, days_in):
         options = webdriver.ChromeOptions();
         options.add_argument('headless'); # to run chrome in the backbroung
 
-        driver = webdriver.Chrome(executable_path='./chromedriver.exe', options=options)
+        driver = webdriver.Chrome(executable_path='chromedriver.exe', options=options)
 
         start_date = today + pd.Timedelta(days=1)
         end_date = today + pd.Timedelta(days=days_in + 1)
@@ -169,7 +169,7 @@ def get_output_data(pickle_file, input_data):
 # GET DATA FRAME WITH SHAPE GEOMETRY INFO
 @st.cache(show_spinner=False)
 def load_shape_data():
-    path = '../data/taxi_zones/taxi_zones.shp'
+    path = 'taxi_zones.shp'
     shape_data = gpd.read_file(path)
 
     # filter Manhattan zones
@@ -229,7 +229,7 @@ def load_taxis_data(output_data, shape_data):
 # DECLARE VARIABLES: start date, NoOfDays, pickle_file
 start_date = date.today() + timedelta(days=1) # start day is tomorrow
 NoOfDays = 3 # number of days for prediction
-pickle_file = './model_regGB.pickle'
+pickle_file = 'model_regGB.pickle'
 
 # RUN FUNCTIONS
 input_data = get_input_data(start_date, NoOfDays)
